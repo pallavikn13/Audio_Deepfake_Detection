@@ -1,0 +1,12 @@
+venv/
+env/
+__pycache__/
+*.pyc
+*.pkl
+*.h5
+*.pt
+*.wav
+*.mp3
+*.csv
+*.zip
+*.rar

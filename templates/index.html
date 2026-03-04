@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Audio Notary</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>🎧 Digital Audio Notary</h1>
+
+    <!-- FILE UPLOAD -->
+    <h2>Upload Audio File</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="audio" required>
+        <button type="submit" class="primary-btn">Analyze Audio</button>
+    </form>
+
+    <hr>
+
+    <!-- MICROPHONE -->
+    <h2>🎤 Live Microphone Detection</h2>
+    <button id="startBtn" class="primary-btn">Start Recording</button>
+    <button id="stopBtn" class="secondary-btn" disabled>Stop Recording</button>
+
+    <p id="status"></p>
+    <p id="prediction"></p>
+
+    <!-- Confidence Bar -->
+    <div class="confidence-container">
+        <div id="confidenceBar"></div>
+    </div>
+
+    <!-- AI Breakdown -->
+    <div id="aiBreakdown" class="ai-info"></div>
+
+</div>
+
+<script>
+let mediaRecorder;
+let audioChunks = [];
+
+// START RECORDING
+document.getElementById("startBtn").onclick = async function () {
+
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+
+    mediaRecorder.start();
+    audioChunks = [];
+
+    document.getElementById("startBtn").classList.add("recording");
+    document.getElementById("status").innerText = "🎙 Recording...";
+
+    mediaRecorder.ondataavailable = event => {
+        audioChunks.push(event.data);
+    };
+
+    document.getElementById("stopBtn").disabled = false;
+};
+
+// STOP RECORDING
+document.getElementById("stopBtn").onclick = function () {
+
+    mediaRecorder.stop();
+    document.getElementById("status").innerText = "Processing...";
+
+    mediaRecorder.onstop = async () => {
+
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        const formData = new FormData();
+        formData.append("audio", audioBlob, "recorded_audio.wav");
+
+        const response = await fetch("/record", {
+            method: "POST",
+            body: formData
+        });
+
+        const result = await response.json();
+
+        document.getElementById("startBtn").classList.remove("recording");
+
+        if (result.error) {
+            document.getElementById("prediction").innerText =
+                "❌ Error: " + result.error;
+        } else {
+
+            document.getElementById("prediction").innerText =
+                "🔍 Result: " + result.result;
+
+            document.getElementById("confidenceBar").style.width =
+                result.score + "%";
+
+            document.getElementById("aiBreakdown").innerHTML =
+                "<h3>🧠 AI Analysis Breakdown</h3>" +
+                "<p>Biometric Score: " + result.score.toFixed(1) + "%</p>" +
+                "<p>Threat Level: " +
+                (result.score < 50 ? "<span class='risk'>HIGH RISK</span>" :
+                 "<span class='safe'>SAFE</span>") +
+                "</p>";
+        }
+
+        document.getElementById("status").innerText = "";
+    };
+
+    document.getElementById("stopBtn").disabled = true;
+};
+</script>
+
+</body>
+</html>
