@@ -25,10 +25,13 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 
 
 # ==============================
-# Load Model
+# Load Model (FIXED FOR RENDER)
 # ==============================
 
-model = load_model("model/deepfake_model.h5")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(BASE_DIR, "model", "deepfake_model.h5")
+
+model = load_model(model_path)
 
 
 # ==============================
@@ -126,6 +129,7 @@ def index():
 @app.route("/record", methods=["POST"])
 def record_audio():
     try:
+
         if 'audio' not in request.files:
             return jsonify({"error": "No audio received"})
 
