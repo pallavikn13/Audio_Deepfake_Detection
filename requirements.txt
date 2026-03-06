@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 flask
 gunicorn
 numpy
@@ -6,12 +5,3 @@ tensorflow==2.10.0
 mysql-connector-python
 mutagen
 librosa
-=======
-flask
-gunicorn
-numpy
-tensorflow==2.10.0
-mysql-connector-python
-mutagen
-librosa
->>>>>>> ff7d1f8aeb76fd3585a1b833f713ba1743e2d869

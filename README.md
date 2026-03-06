@@ -1,46 +1,25 @@
-<<<<<<< HEAD
 # 🎧 Audio Deepfake Detection System
 
 A web-based machine learning application that detects AI-generated and manipulated audio using LSTM deep learning and digital forensic analysis.
 
-## Features:
+## Features
 - MFCC Feature Extraction
 - LSTM Neural Network
 - Digital Metadata Integrity Check
 - Web-based Upload & Detection
 - SQL Storage
 
-## Technologies:
+## Technologies
 - Python 3.8
 - Flask
 - TensorFlow
 - SQL
 - Librosa
 
-## Run Steps:
+## Run Steps
+
 pip install -r requirements.txt
+
 python model_train.py
-=======
-# 🎧 Audio Deepfake Detection System
 
-A web-based machine learning application that detects AI-generated and manipulated audio using LSTM deep learning and digital forensic analysis.
-
-## Features:
-- MFCC Feature Extraction
-- LSTM Neural Network
-- Digital Metadata Integrity Check
-- Web-based Upload & Detection
-- SQL Storage
-
-## Technologies:
-- Python 3.8
-- Flask
-- TensorFlow
-- SQL
-- Librosa
-
-## Run Steps:
-pip install -r requirements.txt
-python model_train.py
->>>>>>> ff7d1f8aeb76fd3585a1b833f713ba1743e2d869
 python app.py
