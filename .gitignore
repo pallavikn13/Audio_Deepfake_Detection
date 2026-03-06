@@ -3,10 +3,15 @@ env/
 __pycache__/
 *.pyc
 *.pkl
-*.h5
 *.pt
 *.wav
 *.mp3
 *.csv
 *.zip
 *.rar
+
+# ignore all h5 files
+*.h5
+
+# allow our deepfake model
+!model/deepfake_model.h5
