@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import mysql.connector
-
+import tensorflow as tf
 from flask import Flask, render_template, request, jsonify
 from werkzeug.utils import secure_filename
 from tensorflow.keras.models import load_model
@@ -31,7 +31,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, "model", "deepfake_model.h5")
 
-model = load_model(model_path)
+model = load_model("model/deepfake_model.h5", compile=False)
 
 
 # ==============================
