@@ -18,7 +18,6 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = "uploads"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
-
 # Create uploads folder automatically
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
@@ -31,7 +30,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, "model", "deepfake_model.h5")
 
-model = load_model("model/deepfake_model.h5", compile=False)
+model = load_model(model_path, compile=False)
 
 
 # ==============================
